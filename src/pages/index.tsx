@@ -1,9 +1,9 @@
-import React from 'react'
+import { useTranslationContext } from 'contexts'
 
 const HomePage = () => {
-  return (
-    <div>HomePage</div>
-  )
+  const { t } = useTranslationContext()
+
+  return <div>{t('login')}</div>
 }
 
 export default HomePage
