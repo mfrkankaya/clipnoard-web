@@ -1,24 +1,24 @@
 import * as Yup from 'yup'
 
 export const LoginSchema = Yup.object().shape({
-  email: Yup.string().required('email_required').email('email_invalid'),
+  email: Yup.string().required('Email is required').email('Email is invalid'),
   password: Yup.string()
-    .required('password_required')
-    .min(8, 'password_short')
-    .max(64, 'password_long')
+    .required('Password is required.')
+    .min(8, 'Password can\'t be shorter than 8 characters.')
+    .max(64, 'Password can\'t be longer than 64 characters.')
 })
 
 export const RegisterSchema = Yup.object().shape({
-  email: Yup.string().required('email_required').email('email_invalid'),
+  email: Yup.string().required('Email is required').email('Email is invalid'),
   password: Yup.string()
-    .required('password_required')
-    .min(8, 'password_short')
-    .max(64, 'password_long'),
+    .required('Password is required.')
+    .min(8, 'Password can\'t be shorter than 8 characters.')
+    .max(64, 'Password can\'t be longer than 64 characters.'),
   passwordConfirm: Yup.string()
-    .required('passwordConfirm_required')
-    .oneOf([Yup.ref('password')], 'passwordConfirm_match')
+    .required('Password confirmation is required.')
+    .oneOf([Yup.ref('password')], 'Passwords must be same.')
 })
 
 export const ForgotPasswordSchema = Yup.object().shape({
-  email: Yup.string().required('email_required').email('email_invalid')
+  email: Yup.string().required('Email is required').email('Email is invalid')
 })
