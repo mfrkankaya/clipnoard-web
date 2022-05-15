@@ -68,7 +68,13 @@ const CreateNoteForm = () => {
     >
       <DialogTitle>Create new note</DialogTitle>
       <DialogContent>
-        <Stack spacing={2} component="form" onSubmit={handleSubmit} noValidate>
+        <Stack
+          spacing={2}
+          component="form"
+          onSubmit={handleSubmit}
+          autoComplete="off"
+          noValidate
+        >
           <TextField
             ref={titleRef}
             id="title"

@@ -30,7 +30,7 @@ const SettingsPage = () => {
 
   return (
     <AuthRequired>
-      <BasicLayout hideCreate>
+      <BasicLayout hideNoteActions>
         <Box pt={[7, 8]}>
           <Container sx={{ mt: 2 }}>
             <Stack spacing={2}>

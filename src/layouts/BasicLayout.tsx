@@ -1,5 +1,14 @@
 import { Add, Settings } from '@mui/icons-material'
-import { AppBar, Box, Button, IconButton, Toolbar, Link } from '@mui/material'
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Link,
+  Grid
+} from '@mui/material'
+import { SearchBar } from 'components'
 import CreateNoteForm from 'containers/CreateNoteForm'
 import { useAppSelector } from 'hooks'
 import NextLink from 'next/link'
@@ -9,10 +18,10 @@ import { openCreateModal } from 'store/appSlice'
 
 interface Props {
   children?: any
-  hideCreate?: boolean
+  hideNoteActions?: boolean
 }
 
-const BasicLayout: FC<Props> = ({ children, hideCreate = false }) => {
+const BasicLayout: FC<Props> = ({ children, hideNoteActions = false }) => {
   const dispatch = useDispatch()
   const { isCreateModalActive } = useAppSelector((state) => state.app)
 
@@ -20,34 +29,67 @@ const BasicLayout: FC<Props> = ({ children, hideCreate = false }) => {
     <Fragment>
       <AppBar position="fixed" elevation={2}>
         <Toolbar>
-          <NextLink href="/" passHref>
-            <Link
-              underline="none"
-              flex={1}
-              variant="h6"
-              sx={{ color: 'white' }}
+          <Grid container spacing={2}>
+            <Grid
+              item
+              xs={4}
+              md={4}
+              sx={{
+                display: { xs: hideNoteActions ? 'flex' : 'none', md: 'flex' },
+                alignItems: 'center'
+              }}
             >
-              CLIPNOARD
-            </Link>
-          </NextLink>
+              <NextLink href="/" passHref>
+                <Link
+                  underline="none"
+                  flex={1}
+                  variant="h6"
+                  sx={{ color: 'white' }}
+                >
+                  CLIPNOARD
+                </Link>
+              </NextLink>
+            </Grid>
 
-          {!hideCreate && (
-            <Button
-              variant="outlined"
-              color="primary"
-              startIcon={<Add />}
-              sx={{ mr: 1, display: ['none', 'flex'] }}
-              onClick={() => dispatch(openCreateModal())}
+            <Grid
+              item
+              xs={hideNoteActions ? 4 : 10}
+              sm={hideNoteActions ? 4 : 7}
+              md={4}
             >
-              Create note
-            </Button>
-          )}
+              {!hideNoteActions && <SearchBar />}
+            </Grid>
 
-          <NextLink href="/settings" passHref>
-            <IconButton sx={{ color: 'white' }}>
-              <Settings />
-            </IconButton>
-          </NextLink>
+            <Grid
+              item
+              xs={hideNoteActions ? 4 : 2}
+              sm={hideNoteActions ? 4 : 5}
+              md={4}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end'
+              }}
+            >
+              {!hideNoteActions && (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  startIcon={<Add />}
+                  sx={{ mr: 1, display: ['none', 'flex'] }}
+                  onClick={() => dispatch(openCreateModal())}
+                >
+                  Create note
+                </Button>
+              )}
+
+              <NextLink href="/settings" passHref>
+                <IconButton sx={{ color: 'white' }}>
+                  <Settings />
+                </IconButton>
+              </NextLink>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
 

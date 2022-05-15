@@ -13,3 +13,14 @@ export const generateNote = ({
   userId,
   createdAt: new Date().getTime()
 })
+
+export const searchNotes = (notes: Note[], searchText: string): Note[] => {
+  const lowerSearchText = searchText.toLocaleLowerCase()
+
+  return notes.filter(({ title, note }) => {
+    return (
+      title.toLocaleLowerCase().includes(lowerSearchText) ||
+      note.toLocaleLowerCase().includes(lowerSearchText)
+    )
+  })
+}
