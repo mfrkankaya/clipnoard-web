@@ -108,7 +108,7 @@ const LoginPage = () => {
               disabled={isSubmitting}
               fullWidth
             >
-              Register
+              Login
             </Button>
 
             <Box textAlign="center">
