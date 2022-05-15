@@ -56,6 +56,7 @@ const BasicLayout: FC<Props> = ({ children, hideNoteActions = false }) => {
               xs={hideNoteActions ? 4 : 10}
               sm={hideNoteActions ? 4 : 7}
               md={4}
+              sx={{ display: 'flex', alignItems: 'center' }}
             >
               {!hideNoteActions && <SearchBar />}
             </Grid>
