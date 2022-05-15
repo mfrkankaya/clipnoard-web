@@ -11,6 +11,7 @@ import { handleAuthStateChange } from 'services'
 import { setUser, toggleThemeMode } from 'store/appSlice'
 import { useEffectOnce } from 'usehooks-ts'
 import { useState } from 'react'
+import { NoSsr } from '@mui/material'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -47,7 +48,9 @@ export default function MyApp(props: MyAppProps) {
       <ThemeProvider theme={theme(themeMode)}>
         <CssBaseline />
         <Provider store={store}>
-          <Component {...pageProps} />
+          <NoSsr>
+            <Component {...pageProps} />
+          </NoSsr>
         </Provider>
       </ThemeProvider>
     </CacheProvider>
