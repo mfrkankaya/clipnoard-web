@@ -69,6 +69,7 @@ const CreateNoteForm = () => {
       <DialogTitle>Create new note</DialogTitle>
       <DialogContent>
         <Stack
+          sx={{ pt: 1 }}
           spacing={2}
           component="form"
           onSubmit={handleSubmit}

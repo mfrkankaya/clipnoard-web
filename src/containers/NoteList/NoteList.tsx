@@ -21,6 +21,8 @@ const NoteList = () => {
     if (!isInitialized) dispatch(fetchInitialNotes(user?.uid as string))
   })
 
+  if (!Boolean(filteredData.length)) return null
+
   return (
     <Masonry
       sx={{ width: 'unset' }}

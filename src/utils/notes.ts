@@ -17,10 +17,28 @@ export const generateNote = ({
 export const searchNotes = (notes: Note[], searchText: string): Note[] => {
   const lowerSearchText = searchText.toLocaleLowerCase()
 
-  return notes.filter(({ title, note }) => {
-    return (
-      title.toLocaleLowerCase().includes(lowerSearchText) ||
-      note.toLocaleLowerCase().includes(lowerSearchText)
-    )
-  })
+  return notes
+    .filter(({ title, note }) => {
+      return (
+        title.toLocaleLowerCase().includes(lowerSearchText) ||
+        note.toLocaleLowerCase().includes(lowerSearchText)
+      )
+    })
+    .sort((a, b) => {
+      const includedTextA = a.title
+        .toLocaleLowerCase()
+        .includes(lowerSearchText)
+        ? a.title.toLocaleLowerCase()
+        : a.note.toLocaleLowerCase()
+
+      const includedTextB = b.title
+        .toLocaleLowerCase()
+        .includes(lowerSearchText)
+        ? b.title.toLocaleLowerCase()
+        : b.note.toLocaleLowerCase()
+
+      return (
+        includedTextA.indexOf(searchText) - includedTextB.indexOf(searchText)
+      )
+    })
 }
