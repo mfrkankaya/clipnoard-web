@@ -5,9 +5,9 @@ import {
   where,
   orderBy,
   collection,
-  getDocs
+  getDocs,
+  deleteDoc
 } from 'firebase/firestore'
-import { generateNote } from 'utils'
 import { firestore } from './firestore'
 
 const notesRef = collection(firestore, 'notes')
@@ -22,7 +22,11 @@ export const getNotesAsync = async (userId: string): Promise<Note[]> => {
 }
 
 export const createNoteAsync = async (note: Note) => {
-  // const newNote = generateNote(note, userId)
   await setDoc(doc(firestore, 'notes', note.id), note)
   return note
+}
+
+export const deleteNoteAsync = async (noteId: string) => {
+  await deleteDoc(doc(firestore, 'notes', noteId))
+  return true
 }

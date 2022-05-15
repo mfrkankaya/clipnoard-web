@@ -5,12 +5,14 @@ interface AppState {
   isUserInitialized: boolean
   user: User | null
   themeMode: ThemeMode
+  isCreateModalActive: boolean
 }
 
 const initialState: AppState = {
   isUserInitialized: false,
   user: null,
-  themeMode: 'dark'
+  themeMode: 'dark',
+  isCreateModalActive: false
 }
 
 export const appSlice = createSlice({
@@ -28,8 +30,15 @@ export const appSlice = createSlice({
       }
 
       state.themeMode = state.themeMode == 'dark' ? 'light' : 'dark'
+    },
+    openCreateModal: (state) => {
+      state.isCreateModalActive = true
+    },
+    closeCreateModal: (state) => {
+      state.isCreateModalActive = false
     }
   }
 })
 
-export const { setUser, toggleThemeMode } = appSlice.actions
+export const { setUser, toggleThemeMode, openCreateModal, closeCreateModal } =
+  appSlice.actions

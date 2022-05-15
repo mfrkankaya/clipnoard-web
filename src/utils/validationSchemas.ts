@@ -24,5 +24,6 @@ export const ForgotPasswordSchema = Yup.object().shape({
 })
 
 export const CreateNoteSchema = Yup.object().shape({
+  title: Yup.string().required('Note is required'),
   note: Yup.string().required('Note is required')
 })

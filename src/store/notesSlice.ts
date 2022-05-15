@@ -28,6 +28,9 @@ export const notesSlice = createSlice({
   reducers: {
     addNote: (state, action: PayloadAction<Note>) => {
       state.data.unshift(action.payload)
+    },
+    removeNote: (state, action: PayloadAction<string>) => {
+      state.data = state.data.filter((note) => note.id !== action.payload)
     }
   },
   extraReducers: (builder) => {
@@ -50,4 +53,4 @@ export const notesSlice = createSlice({
   }
 })
 
-export const { addNote } = notesSlice.actions
+export const { addNote, removeNote } = notesSlice.actions

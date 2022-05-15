@@ -1,7 +1,14 @@
 import { v4 } from 'uuid'
 
-export const generateNote = (note: string, userId: string): Note => ({
+type GenerateNotePayload = Pick<Note, 'note' | 'title' | 'userId'>
+
+export const generateNote = ({
+  title,
+  note,
+  userId
+}: GenerateNotePayload): Note => ({
   id: v4(),
+  title,
   note,
   userId,
   createdAt: new Date().getTime()
