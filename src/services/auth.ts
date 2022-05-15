@@ -6,7 +6,8 @@ import {
   sendEmailVerification,
   NextOrObserver,
   sendPasswordResetEmail,
-  User
+  User,
+  signOut
 } from 'firebase/auth'
 import { app } from './app'
 
@@ -27,3 +28,5 @@ export const sendEmailVerificationAsync = (user: User) =>
 
 export const sendPasswordResetEmailAsync = (email: string) =>
   sendPasswordResetEmail(auth, email)
+
+export const signOutAsync = async () => signOut(auth)

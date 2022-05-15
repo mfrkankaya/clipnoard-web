@@ -1,20 +1,18 @@
 import { Add, Settings } from '@mui/icons-material'
-import {
-  AppBar,
-  Box,
-  Button,
-  IconButton,
-  Toolbar,
-  Typography
-} from '@mui/material'
+import { AppBar, Box, Button, IconButton, Toolbar, Link } from '@mui/material'
 import CreateNoteForm from 'containers/CreateNoteForm'
 import { useAppSelector } from 'hooks'
-import Link from 'next/link'
+import NextLink from 'next/link'
 import { FC, Fragment } from 'react'
 import { useDispatch } from 'react-redux'
 import { openCreateModal } from 'store/appSlice'
 
-const BasicLayout: FC<{ children?: any }> = ({ children }) => {
+interface Props {
+  children?: any
+  hideCreate?: boolean
+}
+
+const BasicLayout: FC<Props> = ({ children, hideCreate = false }) => {
   const dispatch = useDispatch()
   const { isCreateModalActive } = useAppSelector((state) => state.app)
 
@@ -22,25 +20,34 @@ const BasicLayout: FC<{ children?: any }> = ({ children }) => {
     <Fragment>
       <AppBar position="fixed" elevation={2}>
         <Toolbar>
-          <Typography flex={1} variant="h6">
-            CLIPNOARD
-          </Typography>
+          <NextLink href="/" passHref>
+            <Link
+              underline="none"
+              flex={1}
+              variant="h6"
+              sx={{ color: 'white' }}
+            >
+              CLIPNOARD
+            </Link>
+          </NextLink>
 
-          <Button
-            variant="outlined"
-            color="primary"
-            startIcon={<Add />}
-            sx={{ mr: 1, display: ['none', 'flex'] }}
-            onClick={() => dispatch(openCreateModal())}
-          >
-            Create note
-          </Button>
+          {!hideCreate && (
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={<Add />}
+              sx={{ mr: 1, display: ['none', 'flex'] }}
+              onClick={() => dispatch(openCreateModal())}
+            >
+              Create note
+            </Button>
+          )}
 
-          <Link href="/settings" passHref>
-            <IconButton>
+          <NextLink href="/settings" passHref>
+            <IconButton sx={{ color: 'white' }}>
               <Settings />
             </IconButton>
-          </Link>
+          </NextLink>
         </Toolbar>
       </AppBar>
 
