@@ -19,6 +19,8 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="apple-touch-icon" href="/icon.png"></link>
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
         </Head>
