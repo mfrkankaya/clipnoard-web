@@ -1,14 +1,36 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Divider,
   Stack,
   Typography
 } from '@mui/material'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import {
+  checkUserAsync,
+  createUserAsync,
+  signInWithGoogleAsync
+} from 'services'
 
 const WelcomePage = () => {
+  const router = useRouter()
+  const [googleLoading, setGoogleLoading] = useState(false)
+
+  const handleGoogleLogin = async () => {
+    setGoogleLoading(true)
+    const user = await signInWithGoogleAsync()
+    if (user) {
+      const isUserAlreadyExist = await checkUserAsync(user.uid)
+      if (!isUserAlreadyExist) await createUserAsync(user)
+      router.push('/')
+    }
+    setGoogleLoading(false)
+  }
+
   return (
     <Box pt={10}>
       <Container maxWidth="xs">
@@ -19,7 +41,15 @@ const WelcomePage = () => {
           </Typography>
         </Box>
 
-        <Button size="large" variant="contained" color="primary" fullWidth>
+        <Button
+          onClick={handleGoogleLogin}
+          size="large"
+          variant="contained"
+          color="primary"
+          disabled={googleLoading}
+          startIcon={googleLoading ? <CircularProgress size={20} /> : null}
+          fullWidth
+        >
           Continue with Google
         </Button>
 

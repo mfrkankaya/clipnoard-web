@@ -7,7 +7,9 @@ import {
   NextOrObserver,
   sendPasswordResetEmail,
   User,
-  signOut
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup
 } from 'firebase/auth'
 import { app } from './app'
 
@@ -30,3 +32,9 @@ export const sendPasswordResetEmailAsync = (email: string) =>
   sendPasswordResetEmail(auth, email)
 
 export const signOutAsync = async () => signOut(auth)
+
+export const signInWithGoogleAsync = async () => {
+  const provider = new GoogleAuthProvider()
+  const result = await signInWithPopup(auth, provider)
+  return result.user
+}
