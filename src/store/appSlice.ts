@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { User } from 'firebase/auth'
 
 interface AppState {
+  isUserInitialized: boolean
   user: User | null
   themeMode: ThemeMode
 }
 
 const initialState: AppState = {
+  isUserInitialized: false,
   user: null,
   themeMode: 'dark'
 }
@@ -17,6 +19,7 @@ export const appSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload
+      state.isUserInitialized = true
     },
     toggleThemeMode: (state, action: PayloadAction<ThemeMode | undefined>) => {
       if (action.payload) {

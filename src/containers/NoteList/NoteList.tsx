@@ -5,12 +5,12 @@ import NoteItem from './NoteItem'
 import { useEffectOnce } from 'usehooks-ts'
 
 const NoteList = () => {
+  const user = useAppSelector((state) => state.app.user)
   const dispatch = useAppDispatch()
   const { isInitialized, data } = useAppSelector((state) => state.notes)
 
   useEffectOnce(() => {
-    if (!isInitialized)
-      dispatch(fetchInitialNotes('5Tfs4biFFiUrwKexKddY7QD0Zhi1'))
+    if (!isInitialized) dispatch(fetchInitialNotes(user?.uid as string))
   })
 
   return (
