@@ -120,7 +120,7 @@ const NoteItem: FC<Note> = ({ id, note, title }) => {
           </Dialog>
 
           <Snackbar
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             open={snackStatus}
             autoHideDuration={2500}
             onClose={() => setSnackStatus(false)}
