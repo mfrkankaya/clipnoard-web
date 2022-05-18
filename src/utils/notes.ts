@@ -72,13 +72,3 @@ export const removeLocalNotes = () => {
   if (!isLocalStorageAvailable()) return
   localStorage.removeItem('LOCAL_NOTES')
 }
-
-export const isFirstNoteTipSeen = () => {
-  if (!isLocalStorageAvailable()) return true
-
-  const isSeen = localStorage.getItem('IS_FIRST_NOTE_TIP_SEEN')
-  if (isSeen) return true
-
-  localStorage.setItem('IS_FIRST_NOTE_TIP_SEEN', '1')
-  return false
-}

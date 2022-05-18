@@ -7,10 +7,11 @@ import theme from 'theme'
 import { createEmotionCache, getInitialThemeMode } from 'utils'
 import { Provider } from 'react-redux'
 import { store } from 'store'
-import { handleAuthStateChange } from 'services'
+import { getUserAsync, handleAuthStateChange } from 'services'
 import { setUser, toggleThemeMode } from 'store/appSlice'
 import { useEffectOnce } from 'usehooks-ts'
 import { useState } from 'react'
+import { User } from 'firebase/auth'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -23,8 +24,16 @@ export default function MyApp(props: MyAppProps) {
   const [themeMode, setThemeMode] = useState<ThemeMode>('dark')
 
   useEffectOnce(() => {
-    handleAuthStateChange((user) => {
-      store.dispatch(setUser(user))
+    handleAuthStateChange(async (user) => {
+      let userToSet = user as User & CustomUser
+
+      if (user) {
+        const userData = await getUserAsync(user.uid)
+        if (userData) userToSet = { ...user, ...userData }
+      }
+
+      window.USER = userToSet
+      store.dispatch(setUser(userToSet))
     })
 
     let currentThemeMode = store.getState().app.themeMode

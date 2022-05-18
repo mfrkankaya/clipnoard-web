@@ -15,16 +15,25 @@ import NoteList from 'containers/NoteList'
 import { useAppSelector } from 'hooks'
 import BasicLayout from 'layouts/BasicLayout'
 import Head from 'next/head'
+import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { openCreateModal } from 'store/appSlice'
-import { closeFirstNoteTipDialog } from 'store/notesSlice'
+import {
+  closeFirstNoteTipDialog,
+  setIsFirstNoteTipSeenBefore
+} from 'store/notesSlice'
+import { useUpdateEffect } from 'usehooks-ts'
 
 const HomePage = () => {
   const dispatch = useDispatch()
-  const isOnline = useAppSelector((state) => state.app.isOnline)
+  const { isOnline, user } = useAppSelector((state) => state.app)
   const isFirstNoteTipOpen = useAppSelector(
     (state) => state.notes.showFirstNoteTip
   )
+
+  useUpdateEffect(() => {
+    dispatch(setIsFirstNoteTipSeenBefore(Boolean(user?.isAnyNoteCreatedBefore)))
+  }, [user])
 
   return (
     <AuthRequired>

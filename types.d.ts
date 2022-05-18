@@ -8,3 +8,9 @@ interface Note {
   note: string
   createdAt: number
 }
+
+interface CustomUser {
+  id: string
+  email: string
+  isAnyNoteCreatedBefore: boolean
+}

@@ -11,11 +11,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import {
-  checkUserAsync,
-  createUserAsync,
-  signInWithGoogleAsync
-} from 'services'
+import { getUserAsync, createUserAsync, signInWithGoogleAsync } from 'services'
 
 const WelcomePage = () => {
   const router = useRouter()
@@ -25,8 +21,8 @@ const WelcomePage = () => {
     setGoogleLoading(true)
     const user = await signInWithGoogleAsync()
     if (user) {
-      const isUserAlreadyExist = await checkUserAsync(user.uid)
-      if (!isUserAlreadyExist) await createUserAsync(user)
+      const userData = await getUserAsync(user.uid)
+      if (!userData) await createUserAsync(user)
       router.push('/')
     }
     setGoogleLoading(false)

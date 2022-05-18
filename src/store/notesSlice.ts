@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { getNotesAsync } from 'services'
-import { getLocalNotes, isFirstNoteTipSeen } from 'utils'
+import { getNotesAsync, updateUserAsync } from 'services'
+import { getLocalNotes } from 'utils'
 
 interface NotesState {
   isInitialized: boolean
@@ -8,6 +8,7 @@ interface NotesState {
   loading: boolean
   error: any
   showFirstNoteTip: boolean
+  isFirstNoteTipSeenBefore: boolean
 }
 
 const initialState: NotesState = {
@@ -15,7 +16,8 @@ const initialState: NotesState = {
   data: getLocalNotes(),
   loading: false,
   error: false,
-  showFirstNoteTip: false
+  showFirstNoteTip: false,
+  isFirstNoteTipSeenBefore: true
 }
 
 export const fetchInitialNotes = createAsyncThunk(
@@ -31,8 +33,17 @@ export const notesSlice = createSlice({
   reducers: {
     addNote: (state, action: PayloadAction<Note>) => {
       const currentLength = state.data.length
-      if (currentLength === 0 && !isFirstNoteTipSeen())
+      const isTipSeenBefore = state.isFirstNoteTipSeenBefore
+
+      if (currentLength === 0 && !isTipSeenBefore) {
         state.showFirstNoteTip = true
+        state.isFirstNoteTipSeenBefore = true
+
+        updateUserAsync({
+          id: window.USER?.uid as string,
+          isAnyNoteCreatedBefore: true
+        })
+      }
 
       state.data.unshift(action.payload)
     },
@@ -41,10 +52,13 @@ export const notesSlice = createSlice({
     },
     closeFirstNoteTipDialog: (state) => {
       state.showFirstNoteTip = false
+    },
+    setIsFirstNoteTipSeenBefore: (state, action: PayloadAction<boolean>) => {
+      state.isFirstNoteTipSeenBefore = action.payload
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchInitialNotes.pending, (state, action) => {
+    builder.addCase(fetchInitialNotes.pending, (state) => {
       state.loading = true
       state.error = false
     })
@@ -63,5 +77,9 @@ export const notesSlice = createSlice({
   }
 })
 
-export const { addNote, removeNote, closeFirstNoteTipDialog } =
-  notesSlice.actions
+export const {
+  addNote,
+  removeNote,
+  closeFirstNoteTipDialog,
+  setIsFirstNoteTipSeenBefore
+} = notesSlice.actions

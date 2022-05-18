@@ -3,7 +3,7 @@ import { User } from 'firebase/auth'
 
 interface AppState {
   isUserInitialized: boolean
-  user: User | null
+  user: (User & CustomUser) | null
   themeMode: ThemeMode
   isCreateModalActive: boolean
   isOnline: boolean
@@ -21,7 +21,7 @@ export const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User | null>) => {
+    setUser: (state, action: PayloadAction<(User & CustomUser) | null>) => {
       state.user = action.payload
       state.isUserInitialized = true
     },
