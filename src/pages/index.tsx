@@ -1,8 +1,8 @@
 import { Add } from '@mui/icons-material'
 import { Box, Container, Fab } from '@mui/material'
 import AuthRequired from 'containers/AuthRequired'
-import CreateNoteForm from 'containers/CreateNoteForm'
 import NoteList from 'containers/NoteList'
+import { useAppSelector } from 'hooks'
 import BasicLayout from 'layouts/BasicLayout'
 import Head from 'next/head'
 import { useDispatch } from 'react-redux'
@@ -10,6 +10,7 @@ import { openCreateModal } from 'store/appSlice'
 
 const HomePage = () => {
   const dispatch = useDispatch()
+  const isOnline = useAppSelector((state) => state.app.isOnline)
 
   return (
     <AuthRequired>
@@ -29,6 +30,7 @@ const HomePage = () => {
         <Fab
           onClick={() => dispatch(openCreateModal())}
           color="primary"
+          disabled={!isOnline}
           sx={{
             display: ['flex', 'none'],
             position: 'fixed',
