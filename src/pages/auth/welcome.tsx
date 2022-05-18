@@ -7,6 +7,7 @@ import {
   Stack,
   Typography
 } from '@mui/material'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -33,6 +34,9 @@ const WelcomePage = () => {
 
   return (
     <Box pt={10}>
+      <Head>
+        <title>Clipnoard | Welcome</title>
+      </Head>
       <Container maxWidth="xs">
         <Box mb={4} textAlign="center">
           <Typography variant="h5">WELCOME TO</Typography>

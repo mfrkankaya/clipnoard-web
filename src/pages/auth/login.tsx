@@ -14,6 +14,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { signInAsync } from 'services'
 import { LoginSchema, getLoginError } from 'utils'
+import Head from 'next/head'
 
 const LoginPage = () => {
   const [serviceError, setServiceError] = useState('')
@@ -46,6 +47,9 @@ const LoginPage = () => {
 
   return (
     <Box pt={10}>
+      <Head>
+        <title>Clipnoard | Login</title>
+      </Head>
       <Container maxWidth="xs">
         <Box mb={4} textAlign="center">
           <Typography variant="h5">LOGIN</Typography>

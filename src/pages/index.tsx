@@ -4,6 +4,7 @@ import AuthRequired from 'containers/AuthRequired'
 import CreateNoteForm from 'containers/CreateNoteForm'
 import NoteList from 'containers/NoteList'
 import BasicLayout from 'layouts/BasicLayout'
+import Head from 'next/head'
 import { useDispatch } from 'react-redux'
 import { openCreateModal } from 'store/appSlice'
 
@@ -12,6 +13,10 @@ const HomePage = () => {
 
   return (
     <AuthRequired>
+      <Head>
+        <title>Clipnoard | Home</title>
+      </Head>
+
       <BasicLayout>
         <Box pt={[7, 8]}>
           <Container>

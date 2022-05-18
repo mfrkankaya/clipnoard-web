@@ -18,6 +18,7 @@ import {
   signUpAsync
 } from 'services'
 import { RegisterSchema, getRegisterError } from 'utils'
+import Head from 'next/head'
 
 const RegisterPage = () => {
   const [serviceError, setServiceError] = useState('')
@@ -53,6 +54,9 @@ const RegisterPage = () => {
 
   return (
     <Box pt={10}>
+      <Head>
+        <title>Clipnoard | Register</title>
+      </Head>
       <Container maxWidth="xs">
         <Box mb={4} textAlign="center">
           <Typography variant="h5">REGISTER</Typography>

@@ -10,6 +10,7 @@ import {
 import AuthRequired from 'containers/AuthRequired'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import BasicLayout from 'layouts/BasicLayout'
+import Head from 'next/head'
 import { ChangeEventHandler } from 'react'
 import { signOutAsync } from 'services'
 import { toggleThemeMode } from 'store/appSlice'
@@ -30,6 +31,9 @@ const SettingsPage = () => {
 
   return (
     <AuthRequired>
+      <Head>
+        <title>Clipnoard | Settings</title>
+      </Head>
       <BasicLayout hideNoteActions>
         <Box pt={[7, 8]}>
           <Container sx={{ mt: 2 }}>

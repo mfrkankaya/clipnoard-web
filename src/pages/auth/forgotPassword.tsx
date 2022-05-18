@@ -14,6 +14,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { sendPasswordResetEmailAsync } from 'services'
 import { ForgotPasswordSchema, getForgotPasswordError } from 'utils'
+import Head from 'next/head'
 
 const ForgotPasswordPage = () => {
   const [serviceError, setServiceError] = useState('')
@@ -46,6 +47,9 @@ const ForgotPasswordPage = () => {
 
   return (
     <Box pt={10}>
+      <Head>
+        <title>Clipnoard | Forgot password</title>
+      </Head>
       <Container maxWidth="xs">
         <Box mb={4} textAlign="center">
           <Typography variant="h5">FORGOT PASSWORD</Typography>
