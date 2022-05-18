@@ -2,9 +2,9 @@ import Masonry from '@mui/lab/Masonry'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { fetchInitialNotes } from 'store/notesSlice'
 import NoteItem from './NoteItem'
-import { useDebounce, useEffectOnce } from 'usehooks-ts'
+import { useDebounce, useEffectOnce, useUpdateEffect } from 'usehooks-ts'
 import { useMemo } from 'react'
-import { searchNotes } from 'utils'
+import { isOnline, searchNotes, setLocalNotes } from 'utils'
 import { Box, Button, CircularProgress, Typography } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import { openCreateModal } from 'store/appSlice'
@@ -22,9 +22,16 @@ const NoteList = () => {
     return searchNotes(data, debouncedSearchText)
   }, [debouncedSearchText, data])
 
+  const syncLocalNotes = () => {
+    setLocalNotes(data)
+  }
+
   useEffectOnce(() => {
-    if (!isInitialized) dispatch(fetchInitialNotes(user?.uid as string))
+    if (!isInitialized && isOnline())
+      dispatch(fetchInitialNotes(user?.uid as string))
   })
+
+  useUpdateEffect(syncLocalNotes, [data])
 
   if (loading)
     return (

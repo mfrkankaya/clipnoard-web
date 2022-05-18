@@ -42,3 +42,29 @@ export const searchNotes = (notes: Note[], searchText: string): Note[] => {
       )
     })
 }
+
+export const getLocalNotes = (): Note[] => {
+  if (
+    typeof window === 'undefined' ||
+    typeof window.localStorage === 'undefined'
+  )
+    return []
+
+  const localNotes = localStorage.getItem('LOCAL_NOTES')
+
+  if (localNotes) {
+    return JSON.parse(localNotes) as Note[]
+  }
+
+  return []
+}
+
+export const setLocalNotes = (notes: Note[]) => {
+  if (
+    typeof window === 'undefined' ||
+    typeof window.localStorage === 'undefined'
+  )
+    return
+
+  localStorage.setItem('LOCAL_NOTES', JSON.stringify(notes))
+}

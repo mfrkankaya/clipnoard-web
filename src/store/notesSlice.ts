@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getNotesAsync } from 'services'
+import { getLocalNotes } from 'utils'
 
 interface NotesState {
   isInitialized: boolean
@@ -10,7 +11,7 @@ interface NotesState {
 
 const initialState: NotesState = {
   isInitialized: false,
-  data: [],
+  data: getLocalNotes(),
   loading: false,
   error: false
 }
