@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
+import { isOnline as checkNetwork } from 'utils'
 
 export const useIsOnline = () => {
   const [isOnline, setIsOnline] = useState(true)
 
   useEffect(() => {
+    setIsOnline(checkNetwork())
+
     const onlineListener = () => {
       setIsOnline(true)
     }

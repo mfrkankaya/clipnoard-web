@@ -18,7 +18,7 @@ import {
   Snackbar,
   Typography
 } from '@mui/material'
-import { useAppDispatch } from 'hooks'
+import { useAppDispatch, useAppSelector } from 'hooks'
 import { FC, MouseEvent, useState } from 'react'
 import { deleteNoteAsync } from 'services'
 import { removeNote } from 'store/notesSlice'
@@ -26,6 +26,7 @@ import { useCopyToClipboard } from 'usehooks-ts'
 
 const NoteItem: FC<Note> = ({ id, note, title }) => {
   const dispatch = useAppDispatch()
+  const isOnline = useAppSelector((state) => state.app.isOnline)
   const [isDeleteDialogActive, setIsDeleteDialogActive] = useState(false)
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
   const [, copy] = useCopyToClipboard()
@@ -95,7 +96,9 @@ const NoteItem: FC<Note> = ({ id, note, title }) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
           >
-            <MenuItem onClick={handleDeleteClick}>Delete note</MenuItem>
+            <MenuItem onClick={handleDeleteClick} disabled={!isOnline}>
+              Delete note
+            </MenuItem>
             {/* <MenuItem onClick={handleEditClick}>Edit note</MenuItem> */}
           </Menu>
 

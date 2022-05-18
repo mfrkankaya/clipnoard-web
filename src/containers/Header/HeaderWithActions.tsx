@@ -1,12 +1,14 @@
 import { Add, Settings } from '@mui/icons-material'
 import { Button, IconButton, Link, Grid } from '@mui/material'
 import { SearchBar } from 'components'
+import { useAppSelector } from 'hooks'
 import NextLink from 'next/link'
 import { useDispatch } from 'react-redux'
 import { openCreateModal } from 'store/appSlice'
 
 const HeaderWithActions = () => {
   const dispatch = useDispatch()
+  const isOnline = useAppSelector((state) => state.app.isOnline)
 
   return (
     <Grid container spacing={2}>
@@ -53,6 +55,7 @@ const HeaderWithActions = () => {
           startIcon={<Add />}
           sx={{ mr: 1, display: ['none', 'flex'] }}
           onClick={() => dispatch(openCreateModal())}
+          disabled={!isOnline}
         >
           Create note
         </Button>
