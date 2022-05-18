@@ -41,6 +41,9 @@ export const appSlice = createSlice({
     },
     setIsOnline: (state, action: PayloadAction<boolean>) => {
       state.isOnline = action.payload
+    },
+    setIsUserInitialized: (state, action: PayloadAction<boolean>) => {
+      state.isUserInitialized = action.payload
     }
   }
 })
@@ -50,5 +53,6 @@ export const {
   toggleThemeMode,
   openCreateModal,
   closeCreateModal,
-  setIsOnline
+  setIsOnline,
+  setIsUserInitialized
 } = appSlice.actions

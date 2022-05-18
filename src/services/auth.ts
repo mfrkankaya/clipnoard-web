@@ -11,6 +11,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup
 } from 'firebase/auth'
+import { removeLocalNotes } from 'utils'
 import { app } from './app'
 
 export const auth = getAuth(app)
@@ -31,7 +32,10 @@ export const sendEmailVerificationAsync = (user: User) =>
 export const sendPasswordResetEmailAsync = (email: string) =>
   sendPasswordResetEmail(auth, email)
 
-export const signOutAsync = async () => signOut(auth)
+export const signOutAsync = async () => {
+  removeLocalNotes()
+  return signOut(auth)
+}
 
 export const signInWithGoogleAsync = async () => {
   const provider = new GoogleAuthProvider()

@@ -68,6 +68,11 @@ export const setLocalNotes = (notes: Note[]) => {
   localStorage.setItem('LOCAL_NOTES', JSON.stringify(notes))
 }
 
+export const removeLocalNotes = () => {
+  if (!isLocalStorageAvailable()) return
+  localStorage.removeItem('LOCAL_NOTES')
+}
+
 export const isFirstNoteTipSeen = () => {
   if (!isLocalStorageAvailable()) return true
 

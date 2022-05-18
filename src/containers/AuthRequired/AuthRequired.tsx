@@ -1,17 +1,19 @@
 import { FC } from 'react'
-import { useAppSelector } from 'hooks'
+import { useAppDispatch, useAppSelector } from 'hooks'
 import { Box, Button, Container, Typography } from '@mui/material'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
+import { setIsUserInitialized } from 'store/appSlice'
 
 const AuthRequired: FC<{ children: any }> = ({ children }) => {
+  const dispatch = useAppDispatch()
   const router = useRouter()
   const { user, isUserInitialized } = useAppSelector((state) => state.app)
 
   if (user) return children
 
   if (isUserInitialized) {
-    router.push('/auth/welcome')
+    window.location.href = '/auth/welcome'
     // return (
     //   <Box pt={10}>
     //     <Container maxWidth="xs">

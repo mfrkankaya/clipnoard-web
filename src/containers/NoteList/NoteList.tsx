@@ -28,6 +28,8 @@ const NoteList = () => {
   }
 
   useEffectOnce(() => {
+    console.log({ isInitialized, isOnline: checkNetwork() })
+
     if (!isInitialized && checkNetwork())
       dispatch(fetchInitialNotes(user?.uid as string))
   })
