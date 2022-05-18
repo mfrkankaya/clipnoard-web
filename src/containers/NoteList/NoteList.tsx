@@ -55,6 +55,7 @@ const NoteList = () => {
           variant="outlined"
           startIcon={<Add />}
           onClick={() => dispatch(openCreateModal())}
+          disabled={!isOnline}
         >
           Create one now
         </Button>
