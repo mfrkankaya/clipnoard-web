@@ -1,19 +1,21 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getNotesAsync } from 'services'
-import { getLocalNotes } from 'utils'
+import { getLocalNotes, isFirstNoteTipSeen } from 'utils'
 
 interface NotesState {
   isInitialized: boolean
   data: Note[]
   loading: boolean
   error: any
+  showFirstNoteTip: boolean
 }
 
 const initialState: NotesState = {
   isInitialized: false,
   data: getLocalNotes(),
   loading: false,
-  error: false
+  error: false,
+  showFirstNoteTip: false
 }
 
 export const fetchInitialNotes = createAsyncThunk(
@@ -28,10 +30,17 @@ export const notesSlice = createSlice({
   initialState,
   reducers: {
     addNote: (state, action: PayloadAction<Note>) => {
+      const currentLength = state.data.length
+      if (currentLength === 0 && !isFirstNoteTipSeen())
+        state.showFirstNoteTip = true
+
       state.data.unshift(action.payload)
     },
     removeNote: (state, action: PayloadAction<string>) => {
       state.data = state.data.filter((note) => note.id !== action.payload)
+    },
+    closeFirstNoteTipDialog: (state) => {
+      state.showFirstNoteTip = false
     }
   },
   extraReducers: (builder) => {
@@ -54,4 +63,5 @@ export const notesSlice = createSlice({
   }
 })
 
-export const { addNote, removeNote } = notesSlice.actions
+export const { addNote, removeNote, closeFirstNoteTipDialog } =
+  notesSlice.actions

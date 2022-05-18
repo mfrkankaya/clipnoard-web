@@ -103,6 +103,8 @@ const NoteItem: FC<Note> = ({ id, note, title }) => {
           </Menu>
 
           <Dialog
+            fullWidth
+            maxWidth="sm"
             open={isDeleteDialogActive}
             onClose={() => setIsDeleteDialogActive(false)}
           >

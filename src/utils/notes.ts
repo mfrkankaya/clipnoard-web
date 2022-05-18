@@ -43,28 +43,37 @@ export const searchNotes = (notes: Note[], searchText: string): Note[] => {
     })
 }
 
-export const getLocalNotes = (): Note[] => {
+export const isLocalStorageAvailable = () => {
   if (
     typeof window === 'undefined' ||
     typeof window.localStorage === 'undefined'
   )
-    return []
+    return false
+
+  return true
+}
+
+export const getLocalNotes = (): Note[] => {
+  if (!isLocalStorageAvailable()) return []
 
   const localNotes = localStorage.getItem('LOCAL_NOTES')
-
-  if (localNotes) {
-    return JSON.parse(localNotes) as Note[]
-  }
+  if (localNotes) return JSON.parse(localNotes) as Note[]
 
   return []
 }
 
 export const setLocalNotes = (notes: Note[]) => {
-  if (
-    typeof window === 'undefined' ||
-    typeof window.localStorage === 'undefined'
-  )
-    return
+  if (!isLocalStorageAvailable()) return
 
   localStorage.setItem('LOCAL_NOTES', JSON.stringify(notes))
+}
+
+export const isFirstNoteTipSeen = () => {
+  if (!isLocalStorageAvailable()) return true
+
+  const isSeen = localStorage.getItem('IS_FIRST_NOTE_TIP_SEEN')
+  if (isSeen) return true
+
+  localStorage.setItem('IS_FIRST_NOTE_TIP_SEEN', '1')
+  return false
 }
