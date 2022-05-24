@@ -50,8 +50,8 @@ const HeaderWithActions = () => {
         }}
       >
         <Button
-          variant="outlined"
-          color="primary"
+          disableElevation
+          variant="contained"
           startIcon={<Add />}
           sx={{ mr: 1, display: ['none', 'flex'] }}
           onClick={() => dispatch(openCreateModal())}
